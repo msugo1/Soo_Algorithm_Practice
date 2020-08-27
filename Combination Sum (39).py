@@ -59,6 +59,7 @@ class Solution:
         dfs(candidates, [])
         return res
 
+
 # Success - Runtime: 808ms (faster than 5%) / Memory Usage: 14MB (less than 30.74%)
 """
 managed to solve this problem, but it has around 800ms runtime speed, which is really slow.
@@ -67,3 +68,49 @@ Let's give it a try to come up with a better answer for today and
 if not possible, refer to others' codes or the one in Python Algorithm Interview
 """
 
+# the third try with python algorithm interview
+"""
+what I've understood so far: 
+1. target - a value of the given list till it gets 0 and then stop with return 
+otherwise, it would be running forever
+2. simple index controls can keep from getting duplicates
+
+the previous index has nothing to do with the next indices
+
+ex. [2, 3, 6, 7] after picking out 2, 3 from the list, index 0 doesn't have to be seen 
+because [2, 3, 2] is already there as [2, 2, 3]
+
+3. run the append operation in the parameter
+"""
+
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+
+        # csum = a short form of candidate sum
+        def dfs(csum, index, path):
+            # to get rid of infinite loop
+            if csum < 0:
+                return
+            elif csum == 0:
+                res.append(path)
+                # to save this function a redundant recursion again
+                return
+
+            # range - from the index to the length of the given list
+            # against generating duplicates
+            for i in range(index, len(candidates)):
+                dfs(csum - candidates[i], i, path + [candidates[i]])  # list sum takes only between a list and list
+
+        dfs(target, 0, [])
+        return res
+
+# Result - Runtime: 76ms (faster than 72.85%) / Memory Usage: 13.7MB (less than 92.33%)
+# above saved huge amount of time by not carrying out unnecessary repetitive procedures
+# such as checking if an answer has the same values as the previous one with Counter I did with a simple index control
+# or even saved space not making another list
+
+# today's learning point
+# 1. index control
+# 2. how to reduce unnecessary process like by running append in parameters
