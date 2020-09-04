@@ -74,14 +74,55 @@ class Codec:
         # I was annoyed at how int(element) was not working despite an exception being set (if element is None, continue)
         # then I realised actually it's not None but 'None'
 
-        data_list = data.split(" ")
+        # data_list = data.split(" ")
+        #
+        # for i in range(len(data_list)):
+        #     if data_list[i] == 'None':
+        #         data_list[i] = None
+        #     else:
+        #         data_list[i] = int(data_list[i])
 
-        for i in range(len(data_list)):
-            if data_list[i] == 'None':
-                data_list[i] = None
-            else:
-                data_list[i] = int(data_list[i])
+        # first try
+class TreeNode:
+    def __init__(self, val=0):
+        self.val = val
+        self.left = None
+        self.right = None
 
 
+# get_child_index to turn a data_list to tree
+def get_left_child_index(data_list, index):
+    if 0 < 2 * index < len(data_list):
+        return 2 * index
+
+
+def get_right_child_index(data_list, index):
+    if 0 < 2 * index + 1 < len(data_list):
+        return 2 * index + 1
+
+
+data = [None, 1, 2, 3, None, None, 4, 5, None, None, None, None]
+
+
+def deserialise(data_list):
+    for ind, val in enumerate(data_list):
+        data_list[ind] = (ind, val)
+
+    queue = collections.deque()
+    queue.append(data_list[1])
+    left_index = 0
+    right_index = 0
+
+    root = iterate = TreeNode(data_list[1][1])
+
+    while queue:
+        index_and_value = queue.popleft()
+
+        left_index = get_left_child_index(data_list, index_and_value[0])
+        right_index = get_right_child_index(data_list, index_and_value[0])
+
+# I tried to get indices to move onto the next (left, and right child) and value for tree nodes
+# then, realised it is not as simple as a linked_list
+# it can't be like node = node.next ... should think about it more how to move next branches in trees
 
 
