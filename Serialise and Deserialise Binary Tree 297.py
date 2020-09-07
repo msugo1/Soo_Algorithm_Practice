@@ -125,4 +125,129 @@ def deserialise(data_list):
 # then, realised it is not as simple as a linked_list
 # it can't be like node = node.next ... should think about it more how to move next branches in trees
 
+# 5 Sep 2020
+# get started again
 
+# tried to put right and left child indices in queue and create nodes with them
+def deserialise(data_list):
+    start_index = 1
+
+    queue = collections.deque()
+    queue.append(start_index)
+
+    root = node = TreeNode(data_list[queue[0]])
+
+    while queue:
+        node_index = queue.popleft()
+
+        left_index = get_left_child_index(data_list, node_index)
+        right_index = get_right_child_index(data_list, node_index)
+
+        node.left = TreeNode(data_list[left_index])
+        node.right = TreeNode(data_list[right_index])
+
+        queue.append(left_index)
+        queue.append(right_index)
+
+    return root
+
+# what if nodes themselves are put in the queue instead of indices?
+# 1. create root node and put it in queue
+# 2. take it out of the queue and add left and right child nodes from index 2
+# 2-1. whenever a child node adds to its parent, increase the index by 1
+# 2-2. None -> I guess it can be passed on because a node itself already has two Nones for its left and right - cool
+# 3. only if a node is not None, run an append operation into a queue
+# 4. repeat till the index reach the end of the given list
+# 5. return root
+
+# 4. should be till queue comes in empty! because the list will be like [ ~ num, None, None, None, None]
+# so those Nones won't be added into a queue
+
+    def deserialise(data):
+        data_list = data.split(" ")
+
+        # str to list
+        # split turns every element into string in a list
+        # so note that None will be 'None'  not(None)
+        for i in range(len(data_list)):
+            if data_list[i] == 'None':
+                data_list[i] = None
+            else:
+                data_list[i] = int(data_list[i])
+
+        queue = collections.deque()
+        root = TreeNode(data_list[1])
+
+        queue.append(root)
+        index = 2
+
+        while queue:
+            node = queue.popleft()
+
+            if data_list[index] is not None:
+                node.left = TreeNode(data_list[index])
+                queue.append(node.left)
+            index += 1
+
+            if data_list[index] is not None:
+                node.right = TreeNode(data_list[index])
+                queue.append(node.right)
+            index += 1
+
+        return root
+
+# pass the test case but it returned IndexError(list index out of range) when submitted
+# I'll have a look later
+
+# deleted this line
+
+#         for i in range(len(data_list)):
+#             if data_list[i] == 'None':
+#                 data_list[i] = None
+#             else:
+#                 data_list[i] = int(data_list[i])
+
+# it's not necessary because
+
+# if data_list[index] != 'None':
+# node.left / .right = TreeNode(int(data_list[index]))
+# will do the job itself
+# also added this to the first line of serialise
+
+#         if not root:
+#             return ""
+
+# by referring to Leetcode discussions / maybe the error had kept appearing due to the case there's no root for serialise
+# that's probably why it solved the problem
+
+def deserialize(self, data):
+    """Decodes your encoded data to tree.
+
+    :type data: str
+    :rtype: TreeNode
+        """
+    # str -> list
+    # how to turn numbers that are str into into properly without any intervention by 'None'
+    if not data:
+        return None
+
+    data_list = data.split(" ")
+
+    root = TreeNode(data_list[0])
+    queue = collections.deque([root])
+    index = 1
+
+    while queue:
+        node = queue.popleft()
+
+        if data_list[index] != 'None':
+            node.left = TreeNode(int(data_list[index]))
+            queue.append(node.left)
+        index += 1
+
+        if data_list[index] != 'None':
+            node.right = TreeNode(int(data_list[index]))
+            queue.append(node.right)
+        index += 1
+
+    return root
