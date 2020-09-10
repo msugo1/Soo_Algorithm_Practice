@@ -148,3 +148,9 @@ class Solution:
 
 # result - TypeError: unsupported operand type(s) for -: 'int' and 'NoneType'
 # already spent like 2 hours.. I might as well come back tomorrow
+
+# 10 Sep
+# a first go
+# again TypeError
+
+
