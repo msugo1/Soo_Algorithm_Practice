@@ -38,9 +38,8 @@ class Solution:
 # merged[-1] = [min(i[0], merged[-1][0]), max(i[1], merged[-1][1])] can be shortened like this
 # [-1][0] doesn't need to be replaced but only [-1][1] with the higher one
 
-merged[-1] = [min(i[0], merged[-1][0]), max(i[1], merged[-1][1])] ->
-
-    merged[-1][1] = max(i[1], merged[-1][1])
+# merged[-1] = [min(i[0], merged[-1][0]), max(i[1], merged[-1][1])] ->
+#    merged[-1][1] = max(i[1], merged[-1][1])
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
