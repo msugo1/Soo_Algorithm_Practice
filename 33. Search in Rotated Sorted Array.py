@@ -54,3 +54,51 @@ class Solution:
 
 # it returns -1 when nums = [1, 3] and the target = 3 are... should have been 1
 # I don't have days so give another try tomorrow
+
+# low ~ mid ~ high
+# if nums[mid] == target return mid
+# if nums[low] < nums[mid]
+# if nums[low] <= target <= nums[mid]
+# change high to mid - 1 (mid is supposed to be already seen above)
+# otherwise, swap low to mid + 1
+
+# else (nums[low] > nums[mid])
+# if nums[mid] <= target <= nums[high]
+# high = mid - 1
+# else change low to mid + 1
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        if not nums:
+            return -1
+
+        low, high = 0, len(nums) - 1
+
+        while low <= high:
+            mid = low + (high - low) // 2
+
+            if nums[mid] == target:
+                return mid
+
+            if nums[low] < nums[mid]:
+                if nums[low] <= target <= nums[high]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            else:
+                if nums[mid] <= target <= nums[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+        return -1
+
+# result = wrong answer
+
+# answer from PAI
+# with another pivot in the answer called mid_pivot
+
+# mid_pivot = (mid + pivot) % len(nums)
+
+# left = mid + 1 if nums[mid_pivot] <= target else right = mid - 1
+# honestly, I don't think I understood the logic of this. I'll keep this for later.
