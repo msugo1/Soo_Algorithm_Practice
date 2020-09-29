@@ -44,7 +44,7 @@ def find_min_height_trees(n: int, edges: list):
     #         leaf_node.append(key)
     #         del graph[key]
     # Traceback (most recent call last):
-    #   File "C:/Users/고명수/Desktop/Algorithm Practice/test.py", line 15, in <module>
+    #   File "C:/Users/고명수/Desktop/Algorithm Practice/Tkinter.py", line 15, in <module>
     #     for key, value in graph.items():
     # RuntimeError: dictionary changed size during iteration
 
